@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Box, CssBaseline } from '@mui/material';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
@@ -41,6 +42,7 @@ const App: React.FC = () => {
               <Route path="/resources" element={<ResourcesPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/prezentacja" element={<PowerPointViewer />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Box>
         </Box>

@@ -16,16 +16,16 @@ const ACMotorsPage: React.FC = () => {
             </Typography>
 
             <List>
-                <ListItem button component={Link} to="/motors/ac/induction">
+                <ListItem component={Link} to="/motors/ac/induction">
                     <ListItemText primary="1. Silniki indukcyjne" />
                 </ListItem>
-                <ListItem button component={Link} to="/motors/ac/synchronous">
+                <ListItem component={Link} to="/motors/ac/synchronous">
                     <ListItemText primary="2. Silniki synchroniczne" />
                 </ListItem>
-                <ListItem button component={Link} to="/motors/ac/three-phase">
+                <ListItem component={Link} to="/motors/ac/three-phase">
                     <ListItemText primary="3. Silniki trójfazowe" />
                 </ListItem>
-                <ListItem button component={Link} to="/motors/ac/single-phase">
+                <ListItem component={Link} to="/motors/ac/single-phase">
                     <ListItemText primary="4. Silniki jednofazowe" />
                 </ListItem>
             </List>

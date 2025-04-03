@@ -8,7 +8,7 @@ import {
   Collapse,
   styled
 } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import BuildIcon from '@mui/icons-material/Build';
@@ -30,16 +30,19 @@ const Sidebar: React.FC = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
+
   const handleMotorsClick = () => {
     setOpen(!open);
     navigate('/motors');
   };
 
-
   return (
     <List>
       <ListItem disablePadding>
-        <StyledListItemButton component={Link} to="/">
+        <StyledListItemButton onClick={() => handleNavigate('/')}>
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
@@ -48,7 +51,7 @@ const Sidebar: React.FC = () => {
       </ListItem>
 
       <ListItem disablePadding>
-        <StyledListItemButton component={Link} to="/basics">
+        <StyledListItemButton onClick={() => handleNavigate('/basics')}>
           <ListItemIcon>
             <InfoIcon />
           </ListItemIcon>
@@ -57,9 +60,7 @@ const Sidebar: React.FC = () => {
       </ListItem>
 
       <ListItem disablePadding>
-        <StyledListItemButton
-          onClick={handleMotorsClick}
-        >
+        <StyledListItemButton onClick={handleMotorsClick}>
           <ListItemIcon>
             <BuildIcon />
           </ListItemIcon>
@@ -71,20 +72,12 @@ const Sidebar: React.FC = () => {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem disablePadding>
-            <StyledListItemButton
-              component={Link}
-              to="/motors/dc"
-              sx={{ pl: 4 }}
-            >
+            <StyledListItemButton onClick={() => handleNavigate('/motors/dc')} sx={{ pl: 4 }}>
               <ListItemText primary="Silniki DC" />
             </StyledListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <StyledListItemButton
-              component={Link}
-              to="/motors/ac"
-              sx={{ pl: 4 }}
-            >
+            <StyledListItemButton onClick={() => handleNavigate('/motors/ac')} sx={{ pl: 4 }}>
               <ListItemText primary="Silniki AC" />
             </StyledListItemButton>
           </ListItem>
@@ -92,7 +85,7 @@ const Sidebar: React.FC = () => {
       </Collapse>
 
       <ListItem disablePadding>
-        <StyledListItemButton component={Link} to="/resources">
+        <StyledListItemButton onClick={() => handleNavigate('/resources')}>
           <ListItemIcon>
             <BookIcon />
           </ListItemIcon>
@@ -101,7 +94,7 @@ const Sidebar: React.FC = () => {
       </ListItem>
 
       <ListItem disablePadding>
-        <StyledListItemButton component={Link} to="/contact">
+        <StyledListItemButton onClick={() => handleNavigate('/contact')}>
           <ListItemIcon>
             <ContactMailIcon />
           </ListItemIcon>
@@ -110,7 +103,7 @@ const Sidebar: React.FC = () => {
       </ListItem>
 
       <ListItem disablePadding>
-        <StyledListItemButton component={Link} to="/prezentacja">
+        <StyledListItemButton onClick={() => handleNavigate('/prezentacja')}>
           <ListItemIcon>
             <SlideshowIcon />
           </ListItemIcon>

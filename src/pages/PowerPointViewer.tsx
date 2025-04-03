@@ -27,25 +27,24 @@ const PowerPointViewer: React.FC = () => {
         <Typography variant="h6" component="h2">
           Prezentacja: Zasady działania maszyn elektrycznych
         </Typography>
-        
-        <DownloadButton
-          variant="contained"
-          startIcon={<DownloadIcon />}
-          href={presentationUrl}
-          download="Silniki_Elektryczne_Prezentacja.pptx"
-        >
-          Pobierz prezentację
-        </DownloadButton>
+        <a href={presentationUrl} download="Silniki_Elektryczne_Prezentacja.pptx">
+          <DownloadButton
+            variant="contained"
+            startIcon={<DownloadIcon />}
+          >
+            Pobierz prezentację
+          </DownloadButton>
+        </a>
       </Stack>
 
-      <Box sx={{ 
+      <Box sx={{
         height: '600px',
         border: '1px solid #e0e0e0',
         borderRadius: '4px',
         overflow: 'hidden'
       }}>
-        <iframe 
-          src="https://upkrakow-my.sharepoint.com/personal/s174103_student_uken_krakow_pl/_layouts/15/Doc.aspx?sourcedoc={4571e6e7-c227-4a3b-957f-3baeb64b2fa4}&action=embedview&wdAr=1.7777777777777777" 
+        <iframe
+          src="https://upkrakow-my.sharepoint.com/personal/s174103_student_uken_krakow_pl/_layouts/15/Doc.aspx?sourcedoc={4571e6e7-c227-4a3b-957f-3baeb64b2fa4}&action=embedview&wdAr=1.7777777777777777"
           width="100%"
           height="100%"
           frameBorder="0"
