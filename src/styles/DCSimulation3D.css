@@ -1,0 +1,41 @@
+/* Kontener dla przycisków */
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Stylizacja akordeonu */
+.MuiAccordion-root {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.MuiAccordionSummary-root {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.MuiAccordionDetails-root {
+    background-color: #ffffff;
+    padding: 16px;
+}
+
+/* Tło sceny */
+.canvas-container {
+    width: 100%;
+    height: 100%;
+    /* Zmieniono z 100vh na 100% */
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -6,7 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
   Collapse,
-  styled
+  styled,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
@@ -27,16 +27,12 @@ const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
 }));
 
 const Sidebar: React.FC = () => {
-  const [open, setOpen] = useState(false);
+  const [openMotors, setOpenMotors] = useState(false);
+  const [openDCMotors, setOpenDCMotors] = useState(false);
   const navigate = useNavigate();
 
   const handleNavigate = (path: string) => {
     navigate(path);
-  };
-
-  const handleMotorsClick = () => {
-    setOpen(!open);
-    navigate('/motors');
   };
 
   return (
@@ -60,22 +56,49 @@ const Sidebar: React.FC = () => {
       </ListItem>
 
       <ListItem disablePadding>
-        <StyledListItemButton onClick={handleMotorsClick}>
+        <StyledListItemButton onClick={() => setOpenMotors(!openMotors)}>
           <ListItemIcon>
             <BuildIcon />
           </ListItemIcon>
           <ListItemText primary="Silniki" />
-          {open ? <ExpandLess /> : <ExpandMore />}
+          {openMotors ? <ExpandLess /> : <ExpandMore />}
         </StyledListItemButton>
       </ListItem>
 
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse in={openMotors} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem disablePadding>
-            <StyledListItemButton onClick={() => handleNavigate('/motors/dc')} sx={{ pl: 4 }}>
+            <StyledListItemButton onClick={() => setOpenDCMotors(!openDCMotors)} sx={{ pl: 4 }}>
               <ListItemText primary="Silniki DC" />
+              {openDCMotors ? <ExpandLess /> : <ExpandMore />}
             </StyledListItemButton>
           </ListItem>
+
+          <Collapse in={openDCMotors} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem disablePadding>
+                <StyledListItemButton onClick={() => handleNavigate('/motors/dc/construction')} sx={{ pl: 6 }}>
+                  <ListItemText primary="Budowa" />
+                </StyledListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <StyledListItemButton onClick={() => handleNavigate('/motors/dc/operation')} sx={{ pl: 6 }}>
+                  <ListItemText primary="Zasada działania" />
+                </StyledListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <StyledListItemButton onClick={() => handleNavigate('/motors/dc/types')} sx={{ pl: 6 }}>
+                  <ListItemText primary="Rodzaje" />
+                </StyledListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <StyledListItemButton onClick={() => handleNavigate('/motors/dc/applications')} sx={{ pl: 6 }}>
+                  <ListItemText primary="Zastosowania" />
+                </StyledListItemButton>
+              </ListItem>
+            </List>
+          </Collapse>
+
           <ListItem disablePadding>
             <StyledListItemButton onClick={() => handleNavigate('/motors/ac')} sx={{ pl: 4 }}>
               <ListItemText primary="Silniki AC" />

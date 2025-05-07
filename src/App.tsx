@@ -1,19 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Box, CssBaseline } from '@mui/material';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import BasicsPage from './pages/BasicsPage';
-import MotorsPage from './pages/MotorsPage';
-import DCMotorsPage from './pages/DCMotorsPage';
-import ACMotorsPage from './pages/ACMotorsPage';
-import MachinesPage from './pages/MachinesPage';
-import ResourcesPage from './pages/ResourcesPage';
-import ContactPage from './pages/ContactPage';
-import PowerPointViewer from './pages/PowerPointViewer';
+import AppRoutes from './routes/AppRoutes';
 
 const App: React.FC = () => {
   return (
@@ -30,23 +21,14 @@ const App: React.FC = () => {
               p: 3,
               maxWidth: { xs: '100%', md: 'calc(100% - 240px)' },
               marginLeft: { xs: 0, md: '240px' },
+              display: 'flex',
+              flexDirection: 'column',
             }}
           >
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/basics" element={<BasicsPage />} />
-              <Route path="/motors" element={<MotorsPage />} />
-              <Route path="/motors/dc" element={<DCMotorsPage />} />
-              <Route path="/motors/ac" element={<ACMotorsPage />} />
-              <Route path="/machines" element={<MachinesPage />} />
-              <Route path="/resources" element={<ResourcesPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/prezentacja" element={<PowerPointViewer />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
+            <AppRoutes />
           </Box>
         </Box>
-        <Footer />
+        <Footer sx={{ marginTop: 'auto' }} /> {/* Footer zawsze na dole */}
       </Box>
     </Router>
   );
