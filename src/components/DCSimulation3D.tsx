@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
-import { OrbitControls, useGLTF, Html } from "@react-three/drei";
+import { OrbitControls, useGLTF, Html, GizmoHelper, GizmoViewport } from "@react-three/drei";
 import { Suspense, useEffect, memo } from "react";
 import * as THREE from "three";
 import {
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
     Typography,
     FormControlLabel,
     Switch,
+    Button,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "./../styles/DCSimulation3D.css";
 
 const initialModelFolders = [
@@ -70,33 +67,6 @@ const Model = memo(function Model({
     );
 });
 
-function FitCameraToScene() {
-    const { camera, scene } = useThree();
-
-    useEffect(() => {
-        const box = new THREE.Box3().setFromObject(scene);
-        const size = new THREE.Vector3();
-        box.getSize(size);
-
-        const center = new THREE.Vector3();
-        box.getCenter(center);
-
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const fitHeightDistance =
-            camera instanceof THREE.PerspectiveCamera
-                ? maxDim / (2 * Math.atan((camera.fov * Math.PI) / 360))
-                : maxDim;
-        const fitWidthDistance =
-            fitHeightDistance / (camera as THREE.PerspectiveCamera).aspect;
-        const distance = Math.max(fitHeightDistance, fitWidthDistance);
-
-        camera.position.set(center.x, center.y, center.z + distance);
-        camera.lookAt(center);
-    }, [camera, scene]);
-
-    return null;
-}
-
 export default function Scene() {
     const [modelFolders] = useState(initialModelFolders);
     const [hiddenFolders, setHiddenFolders] = useState<string[]>([]);
@@ -110,37 +80,41 @@ export default function Scene() {
     };
 
     return (
-        <div className="scene-container">
+        <div className="scene-vertical-container">
             {/* Filtry */}
-            <div className="controls">
-                <Accordion>
-                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography>Tools</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography variant="subtitle1" gutterBottom>
-                            Display Elements
-                        </Typography>
-                        {modelFolders.map((folder) => (
-                            <FormControlLabel
-                                key={folder}
-                                control={
-                                    <Switch
-                                        checked={!hiddenFolders.includes(folder)}
-                                        onChange={() => handleToggleVisibility(folder)}
-                                    />
-                                }
-                                label={folder}
-                            />
-                        ))}
-                    </AccordionDetails>
-                </Accordion>
+            <div className="controls-horizontal">
+                <Typography variant="subtitle1" style={{ marginRight: 16, fontSize: 16 }}>
+                    Display Elements:
+                </Typography>
+                <div className="controls-buttons-horizontal">
+                    {modelFolders.map((folder) => (
+                        <Button
+                            key={folder}
+                            variant={hiddenFolders.includes(folder) ? "outlined" : "contained"}
+                            color={hiddenFolders.includes(folder) ? "inherit" : "success"}
+                            size="small"
+                            onClick={() => handleToggleVisibility(folder)}
+                            style={{
+                                marginRight: 8,
+                                minWidth: 90,
+                                textTransform: "none",
+                            }}
+                        >
+                            {folder}
+                        </Button>
+                    ))}
+                </div>
             </div>
 
             {/* Scena 3D */}
-            <div className="canvas-container">
-                <Canvas camera={{ position: [0, 0, 30], fov: 50 }}>
-                    <FitCameraToScene />
+            <div className="canvas-container-horizontal">
+                <Canvas
+                    camera={{
+                        position: [5, 5, 5], // kierunek +X +Y +Z, możesz zwiększyć wartość dla oddalenia
+                        fov: 50
+                    }}
+                    style={{ width: "100%", height: "100%" }}
+                >
                     <ambientLight intensity={0.8} />
                     <directionalLight position={[10, 10, 10]} intensity={1.5} />
                     <Suspense
@@ -160,7 +134,13 @@ export default function Scene() {
                             />
                         ))}
                     </Suspense>
-                    <OrbitControls minDistance={5} maxDistance={100} />
+                    <OrbitControls
+                        target={[0, 0, 0]} // patrz na środek sceny
+                        enableDamping
+                    />
+                    <GizmoHelper alignment="top-right" margin={[80, 80]}>
+                        <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="white" />
+                    </GizmoHelper>
                 </Canvas>
             </div>
         </div>

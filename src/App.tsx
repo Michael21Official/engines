@@ -8,7 +8,7 @@ import AppRoutes from './routes/AppRoutes';
 
 const App: React.FC = () => {
   return (
-    <Router>
+    <Router basename="/engines">
       <CssBaseline />
       <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Header />
