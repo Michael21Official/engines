@@ -9,6 +9,10 @@ import DCOperationPage from '../pages/motors/dc/DCOperationPage';
 import DCTypesPage from '../pages/motors/dc/DCTypesPage';
 import DCApplicationsPage from '../pages/motors/dc/DCApplicationsPage';
 import ACMotorsPage from '../pages/motors/ac/ACMotorsPage';
+import ACConstructionPage from '../pages/motors/ac/ACConstructionPage';
+import ACOperationPage from '../pages/motors/ac/ACOperationPage';
+import ACTypesPage from '../pages/motors/ac/ACTypesPage';
+import ACApplicationsPage from '../pages/motors/ac/ACApplicationsPage';
 import MachinesPage from '../pages/MachinesPage';
 import ResourcesPage from '../pages/ResourcesPage';
 import ContactPage from '../pages/ContactPage';
@@ -26,6 +30,10 @@ const AppRoutes: React.FC = () => {
             <Route path="/motors/dc/types" element={<DCTypesPage />} />
             <Route path="/motors/dc/applications" element={<DCApplicationsPage />} />
             <Route path="/motors/ac" element={<ACMotorsPage />} />
+            <Route path="/motors/ac/construction" element={<ACConstructionPage />} />
+            <Route path="/motors/ac/operation" element={<ACOperationPage />} />
+            <Route path="/motors/ac/types" element={<ACTypesPage />} />
+            <Route path="/motors/ac/applications" element={<ACApplicationsPage />} />
             <Route path="/machines" element={<MachinesPage />} />
             <Route path="/resources" element={<ResourcesPage />} />
             <Route path="/contact" element={<ContactPage />} />

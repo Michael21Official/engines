@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Box, List, ListItem, ListItemText } from '@mui/material';
+import { Typography, Box, Grid, Card, CardContent, Button } from '@mui/material';
 import BreadcrumbsComponent from '../../../components/BreadcrumbsComponent';
 import { Link } from 'react-router-dom';
 
@@ -11,31 +11,91 @@ const ACMotorsPage: React.FC = () => {
                 Silniki Prądu Przemiennego (AC)
             </Typography>
 
-            <Typography variant="h5" gutterBottom sx={{ mt: 3 }}>
-                Podkategorie
-            </Typography>
+            <Grid container spacing={3} sx={{ mt: 2 }}>
+                <Grid item xs={12} md={6}>
+                    <Card elevation={3}>
+                        <CardContent>
+                            <Typography variant="h5" gutterBottom>
+                                Budowa silników AC
+                            </Typography>
+                            <Typography paragraph>
+                                Poznaj elementy składowe silników prądu przemiennego, takie jak stojan, wirnik, obudowa, wał i wentylator.
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                component={Link}
+                                to="/motors/ac/construction"
+                                sx={{ mt: 2 }}
+                            >
+                                Dowiedz się więcej
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </Grid>
 
-            <List>
-                <ListItem component={Link} to="/motors/ac/induction">
-                    <ListItemText primary="1. Silniki indukcyjne" />
-                </ListItem>
-                <ListItem component={Link} to="/motors/ac/synchronous">
-                    <ListItemText primary="2. Silniki synchroniczne" />
-                </ListItem>
-                <ListItem component={Link} to="/motors/ac/three-phase">
-                    <ListItemText primary="3. Silniki trójfazowe" />
-                </ListItem>
-                <ListItem component={Link} to="/motors/ac/single-phase">
-                    <ListItemText primary="4. Silniki jednofazowe" />
-                </ListItem>
-            </List>
+                <Grid item xs={12} md={6}>
+                    <Card elevation={3}>
+                        <CardContent>
+                            <Typography variant="h5" gutterBottom>
+                                Zasada działania
+                            </Typography>
+                            <Typography paragraph>
+                                Dowiedz się, jak pole magnetyczne i prąd przemienny powodują ruch obrotowy wirnika w silniku AC.
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                component={Link}
+                                to="/motors/ac/operation"
+                                sx={{ mt: 2 }}
+                            >
+                                Dowiedz się więcej
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </Grid>
 
-            <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                Charakterystyka
-            </Typography>
-            <Typography paragraph>
-                Silniki AC dominują w zastosowaniach przemysłowych dzięki wysokiej sprawności i niezawodności.
-            </Typography>
+                <Grid item xs={12} md={6}>
+                    <Card elevation={3}>
+                        <CardContent>
+                            <Typography variant="h5" gutterBottom>
+                                Rodzaje silników AC
+                            </Typography>
+                            <Typography paragraph>
+                                Poznaj różne rodzaje silników prądu przemiennego, takie jak indukcyjne, synchroniczne, jednofazowe i trójfazowe.
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                component={Link}
+                                to="/motors/ac/types"
+                                sx={{ mt: 2 }}
+                            >
+                                Dowiedz się więcej
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                    <Card elevation={3}>
+                        <CardContent>
+                            <Typography variant="h5" gutterBottom>
+                                Zastosowania
+                            </Typography>
+                            <Typography paragraph>
+                                Odkryj zastosowania silników prądu przemiennego w przemyśle, gospodarstwie domowym i transporcie.
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                component={Link}
+                                to="/motors/ac/applications"
+                                sx={{ mt: 2 }}
+                            >
+                                Dowiedz się więcej
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </Grid>
+            </Grid>
         </Box>
     );
 };

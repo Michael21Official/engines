@@ -1,0 +1,11 @@
+Model Information:
+* title:	Simple AC Motor Design
+* source:	https://sketchfab.com/3d-models/simple-ac-motor-design-2b61b44bd436405a9350169c2f267d5d
+* author:	joh.mackell (https://sketchfab.com/joh.mackell)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Simple AC Motor Design" (https://sketchfab.com/3d-models/simple-ac-motor-design-2b61b44bd436405a9350169c2f267d5d) by joh.mackell (https://sketchfab.com/joh.mackell) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

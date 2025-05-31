@@ -1,40 +1,49 @@
-import React, { useState } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
+import { useState } from "react";
+import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Html, GizmoHelper, GizmoViewport } from "@react-three/drei";
-import { Suspense, useEffect, memo } from "react";
+import { Suspense, memo } from "react";
 import * as THREE from "three";
 import {
     Typography,
-    FormControlLabel,
-    Switch,
     Button,
 } from "@mui/material";
 import "./../styles/DCSimulation3D.css";
 
 const initialModelFolders = [
-    "Part1_Rotor",
-    "Part1",
-    "Part2",
-    "Part3",
-    "Part4",
-    "Part5",
-    "Part6",
-    "Part7",
+    "rotor",
+    "housing_front",
+    "housing_rear",
+    "brushes_left",
+    "brushes_right",
+    "magnet_left",
+    "magnet_right",
+    "shaft_rear",
+    "shaft_front",
 ];
 
 const positionsMap: Record<string, [number, number, number]> = {
-    Part1_Rotor: [0, 0, 0],
-    Part1: [2, 0, 0],
-    Part2: [-2, 0, 0],
-    Part3: [0, 2, 0],
-    Part4: [0, -2, 0],
-    Part5: [2, 2, 0],
-    Part6: [-2, 2, 0],
-    Part7: [0, 0, 2],
+    rotor: [0, 0, 0],
+    housing_front: [0, 0, 0],
+    housing_rear: [0, 0, -1.08],
+    brushes_left: [0.403, 0.045, -0.8],
+    brushes_right: [-0.403, -0.045, -0.8],
+    magnet_left: [0, 0, 0.5],
+    magnet_right: [0, 0, -0.58],
+    shaft_rear: [0, 0, -1.5],
+    shaft_front: [0, 0, 0.8],
+};
+
+const rotationsMap: Record<string, [number, number, number]> = {
+    brushes_left: [Math.PI, 0, 0],
+    brushes_right: [0, Math.PI, 0],
+    magnet_left: [0, Math.PI, 0],
 };
 
 const getPositionForElement = (folder: string): [number, number, number] =>
     positionsMap[folder] || [0, 0, 0];
+
+const getRotationForElement = (folder: string): [number, number, number] =>
+    rotationsMap[folder] || [0, 0, 0];
 
 const Model = memo(function Model({
     folder,
@@ -110,7 +119,7 @@ export default function Scene() {
             <div className="canvas-container-horizontal">
                 <Canvas
                     camera={{
-                        position: [5, 5, 5], // kierunek +X +Y +Z, możesz zwiększyć wartość dla oddalenia
+                        position: [5, 5, 5],
                         fov: 50
                     }}
                     style={{ width: "100%", height: "100%" }}
@@ -129,6 +138,7 @@ export default function Scene() {
                                 key={index}
                                 folder={folder}
                                 position={getPositionForElement(folder)}
+                                rotation={getRotationForElement(folder)}
                                 isHighlighted={false}
                                 isVisible={!hiddenFolders.includes(folder)}
                             />
