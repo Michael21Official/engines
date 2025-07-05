@@ -19,7 +19,7 @@ const DownloadButton = styled(Button)(({ theme }) => ({
 }));
 
 const PowerPointViewer: React.FC = () => {
-  const presentationUrl = "https://upkrakow-my.sharepoint.com/personal/s174103_student_uken_krakow_pl/_layouts/15/Doc.aspx?sourcedoc={4571e6e7-c227-4a3b-957f-3baeb64b2fa4}&action=download";
+  const presentationUrl = "https://upkrakow-my.sharepoint.com/personal/s174103_student_uken_krakow_pl/_layouts/15/Doc.aspx?sourcedoc={3330f614-4dc4-4e30-82d3-85945c280d9e}&action=download";
 
   return (
     <StyledContainer>
@@ -44,7 +44,7 @@ const PowerPointViewer: React.FC = () => {
         overflow: 'hidden'
       }}>
         <iframe
-          src="https://upkrakow-my.sharepoint.com/personal/s174103_student_uken_krakow_pl/_layouts/15/Doc.aspx?sourcedoc={4571e6e7-c227-4a3b-957f-3baeb64b2fa4}&action=embedview&wdAr=1.7777777777777777"
+          src="https://upkrakow-my.sharepoint.com/personal/s174103_student_uken_krakow_pl/_layouts/15/Doc.aspx?sourcedoc={3330f614-4dc4-4e30-82d3-85945c280d9e}&amp;action=embedview&amp;wdAr=1.7777777777777777"
           width="100%"
           height="100%"
           frameBorder="0"

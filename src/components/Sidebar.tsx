@@ -8,7 +8,7 @@ import {
   Collapse,
   styled,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import BuildIcon from '@mui/icons-material/Build';
@@ -29,7 +29,9 @@ const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
 const Sidebar: React.FC = () => {
   const [openMotors, setOpenMotors] = useState(false);
   const [openDCMotors, setOpenDCMotors] = useState(false);
+  const [openACMotors, setOpenACMotors] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -67,13 +69,23 @@ const Sidebar: React.FC = () => {
 
       <Collapse in={openMotors} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
+          {/* Silniki DC */}
           <ListItem disablePadding>
-            <StyledListItemButton onClick={() => setOpenDCMotors(!openDCMotors)} sx={{ pl: 4 }}>
+            <StyledListItemButton
+              onClick={() => {
+                if (location.pathname.startsWith('/motors/dc')) {
+                  setOpenDCMotors((prev) => !prev);
+                } else {
+                  setOpenDCMotors(true);
+                  handleNavigate('/motors/dc');
+                }
+              }}
+              sx={{ pl: 4 }}
+            >
               <ListItemText primary="Silniki DC" />
               {openDCMotors ? <ExpandLess /> : <ExpandMore />}
             </StyledListItemButton>
           </ListItem>
-
           <Collapse in={openDCMotors} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem disablePadding>
@@ -99,11 +111,47 @@ const Sidebar: React.FC = () => {
             </List>
           </Collapse>
 
+          {/* Silniki AC */}
           <ListItem disablePadding>
-            <StyledListItemButton onClick={() => handleNavigate('/motors/ac')} sx={{ pl: 4 }}>
+            <StyledListItemButton
+              onClick={() => {
+                if (location.pathname.startsWith('/motors/ac')) {
+                  setOpenACMotors((prev) => !prev);
+                } else {
+                  setOpenACMotors(true);
+                  handleNavigate('/motors/ac');
+                }
+              }}
+              sx={{ pl: 4 }}
+            >
               <ListItemText primary="Silniki AC" />
+              {openACMotors ? <ExpandLess /> : <ExpandMore />}
             </StyledListItemButton>
           </ListItem>
+          <Collapse in={openACMotors} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem disablePadding>
+                <StyledListItemButton onClick={() => handleNavigate('/motors/ac/construction')} sx={{ pl: 6 }}>
+                  <ListItemText primary="Budowa" />
+                </StyledListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <StyledListItemButton onClick={() => handleNavigate('/motors/ac/operation')} sx={{ pl: 6 }}>
+                  <ListItemText primary="Zasada działania" />
+                </StyledListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <StyledListItemButton onClick={() => handleNavigate('/motors/ac/types')} sx={{ pl: 6 }}>
+                  <ListItemText primary="Rodzaje" />
+                </StyledListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <StyledListItemButton onClick={() => handleNavigate('/motors/ac/applications')} sx={{ pl: 6 }}>
+                  <ListItemText primary="Zastosowania" />
+                </StyledListItemButton>
+              </ListItem>
+            </List>
+          </Collapse>
         </List>
       </Collapse>
 

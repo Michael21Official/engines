@@ -502,6 +502,16 @@
       "type": "SCALAR"
     }
   ],
+  "asset": {
+    "extras": {
+      "author": "joh.mackell (https://sketchfab.com/joh.mackell)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/simple-ac-motor-design-2b61b44bd436405a9350169c2f267d5d",
+      "title": "Simple AC Motor Design"
+    },
+    "generator": "Sketchfab-16.65.0",
+    "version": "2.0"
+  },
   "bufferViews": [
     {
       "buffer": 0,
@@ -529,7 +539,7 @@
   "buffers": [
     {
       "byteLength": 275232,
-      "uri": "ac_model.bin"
+      "uri": "scene.bin"
     }
   ],
   "materials": [
