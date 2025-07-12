@@ -1,0 +1,11 @@
+Model Information:
+* title:	Battery Magnetic Train
+* source:	https://sketchfab.com/3d-models/battery-magnetic-train-cbc9900b80a4419db27b99361a2e73d5
+* author:	Wieslaw Kruczala (https://sketchfab.com/kruczalaw)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Battery Magnetic Train" (https://sketchfab.com/3d-models/battery-magnetic-train-cbc9900b80a4419db27b99361a2e73d5) by Wieslaw Kruczala (https://sketchfab.com/kruczalaw) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

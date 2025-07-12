@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Footer from './components/Footer';
 import AppRoutes from './routes/AppRoutes';
+import AppLoader from './components/loader/AppLoader';
 
 const drawerWidth = 240;
 
@@ -50,65 +51,67 @@ const App: React.FC = () => {
   };
 
   return (
-    <Router basename="/engines">
-      <CssBaseline />
-      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <Header onMenuClick={!isMdUp ? handleDrawerToggle : undefined} />
-        <Box sx={{ display: 'flex', flexGrow: 1 }}>
-          {!isMdUp && (
-            <Drawer
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-              ModalProps={{ keepMounted: true }}
+    <AppLoader>
+      <Router basename="/engines/">
+        <CssBaseline />
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <Header onMenuClick={!isMdUp ? handleDrawerToggle : undefined} />
+          <Box sx={{ display: 'flex', flexGrow: 1 }}>
+            {!isMdUp && (
+              <Drawer
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                ModalProps={{ keepMounted: true }}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                  '& .MuiDrawer-paper': { width: drawerWidth },
+                }}
+              >
+                <Sidebar />
+              </Drawer>
+            )}
+            {isMdUp && (
+              <Box sx={{ width: drawerWidth, flexShrink: 0, display: { xs: 'none', md: 'block' } }}>
+                <Sidebar />
+              </Box>
+            )}
+            <Box
+              component="main"
               sx={{
-                display: { xs: 'block', md: 'none' },
-                '& .MuiDrawer-paper': { width: drawerWidth },
+                flexGrow: 1,
+                p: 3,
+                width: { xs: '100%', md: `calc(100% - ${drawerWidth}px)` },
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
-              <Sidebar />
-            </Drawer>
-          )}
-          {isMdUp && (
-            <Box sx={{ width: drawerWidth, flexShrink: 0, display: { xs: 'none', md: 'block' } }}>
-              <Sidebar />
+              <AppRoutes />
             </Box>
-          )}
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 1,
-              p: 3,
-              width: { xs: '100%', md: `calc(100% - ${drawerWidth}px)` },
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >          
-            <AppRoutes />
           </Box>
+          <Footer sx={{ marginTop: 'auto' }} />
+          {!isMdUp && showFab && (
+            <Fab
+              color="primary"
+              aria-label="menu"
+              onClick={handleDrawerToggle}
+              onMouseDown={handleFabDrag}
+              sx={{
+                position: 'fixed',
+                left: fabPosition.x,
+                top: fabPosition.y,
+                zIndex: 2000,
+                boxShadow: 6,
+                cursor: 'grab',
+                transition: 'box-shadow 0.2s',
+              }}
+            >
+              <MenuIcon />
+            </Fab>
+          )}
         </Box>
-        <Footer sx={{ marginTop: 'auto' }} />
-        {!isMdUp && showFab && (
-          <Fab
-            color="primary"
-            aria-label="menu"
-            onClick={handleDrawerToggle}
-            onMouseDown={handleFabDrag}
-            sx={{
-              position: 'fixed',
-              left: fabPosition.x,
-              top: fabPosition.y,
-              zIndex: 2000,
-              boxShadow: 6,
-              cursor: 'grab',
-              transition: 'box-shadow 0.2s',
-            }}
-          >
-            <MenuIcon />
-          </Fab>
-        )}
-      </Box>
-    </Router>
+      </Router>
+    </AppLoader>
   );
 };
 

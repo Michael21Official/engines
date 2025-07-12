@@ -15,7 +15,6 @@ import ACTypesPage from '../pages/motors/ac/ACTypesPage';
 import ACApplicationsPage from '../pages/motors/ac/ACApplicationsPage';
 import MachinesPage from '../pages/MachinesPage';
 import ResourcesPage from '../pages/ResourcesPage';
-import ContactPage from '../pages/ContactPage';
 import PowerPointViewer from '../pages/PowerPointViewer';
 
 const AppRoutes: React.FC = () => {
@@ -36,7 +35,6 @@ const AppRoutes: React.FC = () => {
             <Route path="/motors/ac/applications" element={<ACApplicationsPage />} />
             <Route path="/machines" element={<MachinesPage />} />
             <Route path="/resources" element={<ResourcesPage />} />
-            <Route path="/contact" element={<ContactPage />} />
             <Route path="/prezentacja" element={<PowerPointViewer />} />
             <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

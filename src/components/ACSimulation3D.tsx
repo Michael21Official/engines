@@ -1,7 +1,8 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Html, GizmoHelper, GizmoViewport } from "@react-three/drei";
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useMemo, useState, useRef, useEffect } from "react";
 import { Typography, Box, ToggleButton, ToggleButtonGroup, Button, Slider, Stack } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 import "./../styles/DCSimulation3D.css";
 
 const acElements = [
@@ -30,6 +31,7 @@ const elementLabels: Record<string, string> = {
 };
 
 const backgrounds = [
+    { label: "Przezroczysty", value: "#f5f5f5" },
     { label: "Jasne", value: "#e0eafc" },
     { label: "Ciemne", value: "#222831" },
     { label: "Białe", value: "#ffffff" },
@@ -98,7 +100,42 @@ export default function ACSimulation3D() {
     const [background, setBackground] = useState("#e0eafc");
     const [coilRotating, setCoilRotating] = useState(false);
     const [powerOn, setPowerOn] = useState(false);
-    const [rotationSpeed, setRotationSpeed] = useState(1); // 1 = domyślna prędkość
+    const [rotationSpeed, setRotationSpeed] = useState(1);
+
+    // Slider do filtrów
+    const filtersRef = useRef<HTMLDivElement>(null);
+    const isMobile = useMediaQuery("(max-width:600px)");
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(false);
+
+    const checkScroll = () => {
+        const el = filtersRef.current;
+        if (!el) return;
+        setCanScrollLeft(el.scrollLeft > 0);
+        setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
+    };
+
+    useEffect(() => {
+        checkScroll();
+        const el = filtersRef.current;
+        if (!el) return;
+        el.addEventListener("scroll", checkScroll);
+        window.addEventListener("resize", checkScroll);
+        return () => {
+            el.removeEventListener("scroll", checkScroll);
+            window.removeEventListener("resize", checkScroll);
+        };
+    }, []);
+
+    const scrollFilters = (direction: "left" | "right") => {
+        if (filtersRef.current) {
+            const scrollAmount = 180;
+            filtersRef.current.scrollBy({
+                left: direction === "left" ? -scrollAmount : scrollAmount,
+                behavior: "smooth",
+            });
+        }
+    };
 
     // Handler grupowy: przełącza wszystkie elementy grupy naraz
     const handleGroupToggle = (elements: string[]) => {
@@ -114,38 +151,111 @@ export default function ACSimulation3D() {
 
     return (
         <div className="scene-vertical-container">
-            <div className="controls-horizontal">
-                <Typography variant="subtitle1" style={{ marginRight: 16, fontSize: 16 }}>
-                    Wyświetlane elementy:
-                </Typography>
-                <div className="controls-buttons-horizontal">
-                    {groups.map((group) => {
-                        const allVisible = group.elements.every((name) => visibleMap[name]);
-                        return (
-                            <Button
-                                key={group.label}
-                                variant={allVisible ? "contained" : "outlined"}
-                                color={allVisible ? "success" : "inherit"}
-                                size="small"
-                                onClick={() => handleGroupToggle(group.elements)}
-                                style={{
-                                    marginRight: 8,
-                                    minWidth: 120,
-                                    textTransform: "none",
-                                }}
-                            >
-                                {group.label}
-                            </Button>
-                        );
-                    })}
-                </div>
-                <Box sx={{ ml: 4 }}>
+            <div
+                className="controls-horizontal"
+                style={{
+                    flexDirection: isMobile ? "column" : "row",
+                    alignItems: isMobile ? "stretch" : "center",
+                    gap: isMobile ? "12px 0" : undefined,
+                    padding: isMobile ? "8px 4px" : undefined,
+                }}
+            >
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        flex: 1,
+                        minWidth: 0,
+                        width: "100%",
+                        mb: isMobile ? 1 : 0,
+                    }}
+                >
+                    {canScrollLeft && (
+                        <Button
+                            onClick={() => scrollFilters("left")}
+                            sx={{
+                                minWidth: 32,
+                                px: 0,
+                                mr: 1,
+                                height: 36,
+                                display: "flex",
+                                fontSize: isMobile ? "1.2rem" : "1.5rem",
+                            }}
+                        >
+                            &#8592;
+                        </Button>
+                    )}
+
+                    <div
+                        ref={filtersRef}
+                        className="controls-buttons-horizontal"
+                        style={{
+                            display: "flex",
+                            overflowX: "auto",
+                            scrollbarWidth: "none",
+                            msOverflowStyle: "none",
+                            flex: 1,
+                            minWidth: 0,
+                        }}
+                    >
+                        {groups.map((group) => {
+                            const allVisible = group.elements.every((name) => visibleMap[name]);
+                            return (
+                                <Button
+                                    key={group.label}
+                                    variant={allVisible ? "contained" : "outlined"}
+                                    color={allVisible ? "success" : "inherit"}
+                                    size="small"
+                                    onClick={() => handleGroupToggle(group.elements)}
+                                    sx={{
+                                        marginRight: isMobile ? 0.5 : 1,
+                                        minWidth: isMobile ? 60 : 120,
+                                        fontSize: isMobile ? "0.75rem" : "1rem",
+                                        textTransform: "none",
+                                        whiteSpace: "nowrap",
+                                        flexShrink: 0,
+                                        py: isMobile ? 0.2 : 1,
+                                    }}
+                                >
+                                    {group.label}
+                                </Button>
+                            );
+                        })}
+                    </div>
+
+                    {canScrollRight && (
+                        <Button
+                            onClick={() => scrollFilters("right")}
+                            sx={{
+                                minWidth: 32,
+                                px: 0,
+                                ml: 1,
+                                height: 36,
+                                display: "flex",
+                                fontSize: isMobile ? "1.2rem" : "1.5rem",
+                            }}
+                        >
+                            &#8594;
+                        </Button>
+                    )}
+                </Box>
+                <Box
+                    className="background-toggle-group"
+                    sx={{
+                        ml: isMobile ? 0 : 4,
+                        mt: isMobile ? 1 : 0,
+                        width: isMobile ? "100%" : "auto",
+                        display: "flex",
+                        justifyContent: isMobile ? "flex-start" : "center",
+                    }}
+                >
                     <ToggleButtonGroup
                         value={background}
                         exclusive
                         onChange={(_, value) => value && setBackground(value)}
-                        size="small"
+                        size={isMobile ? "small" : "medium"}
                         color="primary"
+                        fullWidth={isMobile}
                     >
                         {backgrounds.map((bg) => (
                             <ToggleButton key={bg.value} value={bg.value}>
@@ -158,7 +268,7 @@ export default function ACSimulation3D() {
             <div className="canvas-container-horizontal">
                 <Canvas
                     camera={{
-                        position: [5, 5, 5],
+                        position: [10, 5, 5],
                         fov: 50,
                     }}
                     style={{ width: "100%", height: "100%" }}
