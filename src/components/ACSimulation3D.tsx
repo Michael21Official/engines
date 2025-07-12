@@ -17,19 +17,6 @@ const acElements = [
     "Cylinder002_Material_0",
 ];
 
-// Mapowanie technicznych nazw na czytelne dla użytkownika
-const elementLabels: Record<string, string> = {
-    Text001_black_0: "Napis N (Magnes N)",
-    Cube001_red_0: "Magnes N (Czerwony)",
-    Text_black_0: "Napis S (Magnes S)",
-    Cube_blue_0: "Magnes S (Niebieski)",
-    Cylinder_copper_0: "Cewka (obrót zgodnie z ruchem wskazówek zegara)",
-    Cylinder001_copper_0: "Komutator 1",
-    Cylinder004_copper_0: "Komutator 2",
-    Cylinder002_black_0: "Szczotka 1 z regulacją prędkości",
-    Cylinder002_Material_0: "Szczotka 2 z regulacją prędkości",
-};
-
 const backgrounds = [
     { label: "Przezroczysty", value: "#f5f5f5" },
     { label: "Jasne", value: "#e0eafc" },
