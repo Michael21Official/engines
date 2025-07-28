@@ -27,15 +27,11 @@ const backgrounds = [
 
 const groups = [
     {
-        label: "Magnes N",
-        elements: ["Text001_black_0", "Cube001_red_0"],
+        label: "Pole magnetyczne stojana",
+        elements: ["Text_black_0", "Cube_blue_0", "Text001_black_0", "Cube001_red_0"],
     },
     {
-        label: "Magnes S",
-        elements: ["Text_black_0", "Cube_blue_0"],
-    },
-    {
-        label: "Cewka",
+        label: "Rotor",
         elements: ["Cylinder_copper_0"],
     },
     {

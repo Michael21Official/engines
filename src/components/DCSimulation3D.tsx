@@ -17,6 +17,7 @@ import {
     useMediaQuery,
     Slider,
     Stack,
+    useTheme
 } from "@mui/material";
 import "./../styles/DCSimulation3D.css";
 
@@ -190,6 +191,9 @@ export default function Scene() {
         }
     };
 
+    const theme = useTheme();
+    const isWide = useMediaQuery(theme.breakpoints.up("sm"));
+
     return (
         <div className="scene-vertical-container">
             {/* Panel kontroli */}
@@ -347,8 +351,13 @@ export default function Scene() {
             </div>
 
             {/* PANEL STEROWANIA */}
-            <Box sx={{ mt: 2, display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
-                <Stack direction="row" spacing={2}>
+            <Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
+                <Stack
+                    direction={isWide ? "row" : "column"}
+                    spacing={2}
+                    alignItems="center"
+                    justifyContent="center"
+                >
                     <Button
                         variant={powerOn ? "contained" : "outlined"}
                         color={powerOn ? "success" : "primary"}
@@ -364,21 +373,21 @@ export default function Scene() {
                     >
                         {rotorRotating ? "Zatrzymaj wirnik" : "Uruchom obrót wirnika"}
                     </Button>
+                    <Box sx={{ width: 300 }}>
+                        <Typography gutterBottom>
+                            Prędkość obrotu wirnika: {rotationSpeed.toFixed(2)}
+                        </Typography>
+                        <Slider
+                            value={rotationSpeed}
+                            min={0.1}
+                            max={3}
+                            step={0.01}
+                            onChange={(_, value) => setRotationSpeed(Number(value))}
+                            disabled={!powerOn || !rotorRotating}
+                            valueLabelDisplay="auto"
+                        />
+                    </Box>
                 </Stack>
-                <Box sx={{ width: 300, mt: 2 }}>
-                    <Typography gutterBottom>
-                        Prędkość obrotu wirnika: {rotationSpeed.toFixed(2)}
-                    </Typography>
-                    <Slider
-                        value={rotationSpeed}
-                        min={0.1}
-                        max={3}
-                        step={0.01}
-                        onChange={(_, value) => setRotationSpeed(Number(value))}
-                        disabled={!powerOn || !rotorRotating}
-                        valueLabelDisplay="auto"
-                    />
-                </Box>
             </Box>
         </div>
     );

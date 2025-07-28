@@ -3,7 +3,7 @@ import { OrbitControls, useGLTF, Html } from "@react-three/drei";
 import { useMemo, Suspense } from "react";
 import { Object3D } from "three";
 
-function GLTFObjects({
+function GLTFObject({
     path,
     objectNames,
     scale = [1, 1, 1],
@@ -15,30 +15,31 @@ function GLTFObjects({
     const { scene } = useGLTF(path, true);
 
     const selectedObjects = useMemo(() => {
-        const selected: Object3D[] = [];
+        const found: Object3D[] = [];
         scene.traverse((child) => {
             if (objectNames.includes(child.name)) {
-                selected.push(child);
+                found.push(child);
             }
         });
-        return selected;
+        return found;
     }, [scene, objectNames]);
 
     if (selectedObjects.length === 0) return null;
 
     return (
         <>
-            {selectedObjects.map((obj, idx) => (
-                <primitive key={idx} object={obj} scale={scale} />
+            {selectedObjects.map((object, index) => (
+                <primitive key={index} object={object} scale={scale} />
             ))}
         </>
     );
 }
 
+
 export default function SingleObjectViewer3D({
     path,
     objectNames,
-    background = "black",
+    background = "#ffffff",
     cameraPosition = [2, 2, 4],
     scale = [1, 1, 1],
 }: {
@@ -50,10 +51,7 @@ export default function SingleObjectViewer3D({
 }) {
     return (
         <div style={{ width: "100%", height: "400px" }}>
-            <Canvas
-                camera={{ position: cameraPosition, fov: 50 }}
-                style={{ width: "100%", height: "100%" }}
-            >
+            <Canvas camera={{ position: cameraPosition, fov: 50 }} style={{ width: "100%", height: "100%" }}>
                 <color attach="background" args={[background]} />
                 <ambientLight intensity={0.8} />
                 <directionalLight position={[10, 10, 10]} intensity={1.5} />
@@ -61,11 +59,11 @@ export default function SingleObjectViewer3D({
                 <Suspense
                     fallback={
                         <Html center>
-                            <div style={{ color: "black" }}>Ładowanie obiektów...</div>
+                            <div style={{ color: "black" }}>Ładowanie obiektu...</div>
                         </Html>
                     }
                 >
-                    <GLTFObjects path={path} objectNames={objectNames} scale={scale} />
+                    <GLTFObject path={path} objectNames={objectNames} scale={scale} />
                 </Suspense>
 
                 <OrbitControls enableDamping />
@@ -73,3 +71,4 @@ export default function SingleObjectViewer3D({
         </div>
     );
 }
+

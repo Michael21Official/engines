@@ -5,10 +5,10 @@ import BreadcrumbsComponent from '../components/BreadcrumbsComponent';
 import uchwyt from '../../public/images/pomoc-ilustracje/uchwyt.png';
 import cewka from '../../public/images/pomoc-ilustracje/cewka.png';
 import regulaLenza from '../../public/images/pomoc-ilustracje/regulaLenza.png';
-import zasadaPrawejReki from '../../public/images/pomoc-ilustracje/zasada_prawej_reki.png';
+import zasadaLewejReki from '../../public/images/pomoc-ilustracje/a_lewa_reka.gif';
+import zasadaPrawejReki from '../../public/images/pomoc-ilustracje/a_prawa_reka.gif';
+import zasadaPrawejDloni from '../../public/images/pomoc-ilustracje/zasada_prawej_reki.png';
 import ModelViewer3D from '../components/ModelViewer3D';
-import SingleObjectViewer3D from '../components/GLTFObject';
-
 
 const BasicsPage: React.FC = () => {
   return (
@@ -79,33 +79,25 @@ const BasicsPage: React.FC = () => {
           </Typography>
 
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-            Zasada lewej dłoni
+            Zasada lewej ręki
           </Typography>
           <Typography paragraph>
             Jeżeli lewą dłoń ustawimy w polu magnetycznym w taki sposób, że linie pola magnetycznego (od N do S) są skierowane do jej wewnętrznej strony, a wyprostowane palce wskazują kierunek przepływu prądu (od + do -), to odchylony kciuk wskaże kierunek działania siły elektrodynamicznej.
           </Typography>
 
-          <Box sx={{ backgroundColor: '#f5f5f5', p: 2, borderRadius: 1, mb: 2 }}>
-            <Typography variant="body2" color="textSecondary">
-              <Box sx={{ backgroundColor: '#f5f5f5', p: 1, borderRadius: 1, mb: 2, height: { xs: 300, sm: 400, md: 500 }, minHeight: 200 }}>
-                <ModelViewer3D path='/engines/models/simpleExaple/battery_magnetic_train/scene.gltf' background="black" />
-              </Box>
-            </Typography>
-          </Box>
-
-
-          <Box sx={{ backgroundColor: '#f5f5f5', p: 2, borderRadius: 1, mb: 2 }}>
-            <Typography variant="body2" color="textSecondary">
-              <Box sx={{ backgroundColor: '#f5f5f5', p: 1, borderRadius: 1, mb: 2, height: { xs: 300, sm: 400, md: 500 }, minHeight: 200 }}>
-                <SingleObjectViewer3D
-                  path="/engines/models/simpleExaple/battery_magnetic_train/scene.gltf"
-                  objectNames={["hand1_0", "hand2_0", "hand3_0"]}
-                  scale={[1, 1, 1]}
-                />
-
-              </Box>
-            </Typography>
-          </Box>
+          <Box
+            component="img"
+            src={zasadaLewejReki}
+            alt="Reguła Lenza – ilustracja"
+            sx={{
+              flex: 1,
+              width: '100%',
+              maxWidth: 300,
+              height: 'auto',
+              borderRadius: 2,
+              objectFit: 'contain',
+            }}
+          />
 
           <Typography paragraph>
             Wartość siły elektrodynamicznej jest wprost proporcjonalna do natężenia prądu płynącego w przewodniku i do długości odcinka przewodnika znajdującego się w polu magnetycznym.
@@ -122,11 +114,38 @@ const BasicsPage: React.FC = () => {
             <strong>l</strong> – długość przewodnika, która znajduje się w polu magnetycznym<br />
             <strong>α</strong> – kąt pomiędzy kierunkiem prądu w przewodniku a kierunkiem linii pola magnetycznego
           </Typography>
+
+          <Box sx={{ backgroundColor: '#f5f5f5', p: 2, borderRadius: 1, mb: 2 }}>
+            <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+              Reguła trzech palców lewej ręki
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              <Box
+                sx={{
+                  backgroundColor: '#f5f5f5',
+                  p: 1,
+                  borderRadius: 1,
+                  mb: 2,
+                  height: { xs: 300, sm: 400, md: 500 },
+                  minHeight: 200,
+                }}
+              >
+                <ModelViewer3D
+                  path="/engines/models/simpleExaple/battery_magnetic_train/scene.gltf"
+                  background="black"
+                />
+              </Box>
+              Reguła trzech palców lewej ręki odnosi się do sytuacji, gdy chcemy wyznaczyć w którą stronę działa siła działająca ze strony pola magnetycznego na poruszające się ładunki elektryczne. Siła ta działa prostopadle zarówno do linii pola jak i prędkości cząstki.
+
+              Reguła mówi nam, że jeśli lewą rękę ustawimy tak, że trzy palce (kciuk, wskazujący i środkowy) będą ustawione prostopadle i przypiszemy im kierunki: wskazujący kierunek pola B, środkowy kierunek ruchu dodatniego ładunku, to kciuk wskaże nam kierunek siły magnetycznej.
+
+            </Typography>
+          </Box>
         </Box>
-      </motion.div>
+      </motion.div >
 
       {/* Indukcja elektromagnetyczna */}
-      <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }}>
+      < motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }}>
         <Box sx={{ p: 3, backgroundColor: 'background.paper', borderRadius: 2, boxShadow: 3, mt: 2 }}>
           <Typography variant="h5" gutterBottom>
             Indukcja elektromagnetyczna
@@ -299,19 +318,6 @@ const BasicsPage: React.FC = () => {
             </Box>
           </Box>
 
-
-          <Box sx={{ backgroundColor: '#f5f5f5', p: 1, borderRadius: 1, mb: 2, height: { xs: 300, sm: 400, md: 500 }, minHeight: 200 }}>
-            <iframe
-              src="https://phet.colorado.edu/sims/html/faradays-electromagnetic-lab/latest/faradays-electromagnetic-lab_pl.html"
-              width="100%"
-              height="100%"
-              style={{ border: 0, borderRadius: 8, display: 'block' }}
-              allowFullScreen
-              title="Experiment on magnetic induction"
-            />
-          </Box>
-
-
           <Typography paragraph>
             Poruszający się przewodnik przecina linie pola magnetycznego, co powoduje powstanie siły elektromotorycznej. Siła ta działa na swobodne elektrony w przewodniku, powodując ich przemieszczenie i wytworzenie napięcia.
           </Typography>
@@ -340,7 +346,40 @@ const BasicsPage: React.FC = () => {
             Ustaw prawą rękę tak, aby linie pola magnetycznego (od bieguna N do S) wchodziły do wnętrza dłoni, a kciuk wskazywał kierunek ruchu przewodu. Wtedy pozostałe palce wskazują zwrot indukującej się siły elektromotorycznej (SEM), czyli kierunek przepływu prądu.
           </Typography>
 
+          <Box
+            component="img"
+            src={zasadaPrawejReki}
+            alt="Reguła Lenza – ilustracja"
+            sx={{
+              flex: 1,
+              width: '100%',
+              maxWidth: 300,
+              height: 'auto',
+              borderRadius: 2,
+              objectFit: 'contain',
+            }}
+          />
+
+
+          <Typography paragraph sx={{ fontFamily: 'monospace', backgroundColor: '#f5f5f5', p: 2, borderRadius: 1 }}>
+            e = B · l · v
+          </Typography>
+
+          <Typography paragraph>
+            <strong>e</strong> – siła elektromotoryczna (V) <br />
+            <strong>B</strong> – indukcja magnetyczna (T) <br />
+            <strong>l</strong> – długość przewodnika w polu magnetycznym (m) <br />
+            <strong>v</strong> – prędkość ruchu przewodnika (m/s)
+          </Typography>
+
+          <Typography paragraph>
+            Indukcja elektromagnetyczna znajduje zastosowanie m.in. w prądnicach, transformatorach, mikrofonach dynamicznych oraz bezkontaktowym ładowaniu urządzeń elektronicznych. To jedno z kluczowych zjawisk umożliwiających przekształcanie energii mechanicznej w elektryczną.
+          </Typography>
+
           <Box sx={{ backgroundColor: '#f5f5f5', p: 2, borderRadius: 1, mb: 2 }}>
+            <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+              Zasada prawej dłoni
+            </Typography>
             <Box
               sx={{
                 display: 'flex',
@@ -373,7 +412,7 @@ const BasicsPage: React.FC = () => {
               {/* IMAGE */}
               <Box
                 component="img"
-                src={zasadaPrawejReki}
+                src={zasadaPrawejDloni}
                 alt="Zasada prawej ręki – ilustracja"
                 sx={{
                   flex: 1,
@@ -385,29 +424,17 @@ const BasicsPage: React.FC = () => {
                 }}
               />
             </Box>
+            <strong>Ćwiczenie: Zwrot wektora indukcji magnetycznej</strong><br /><br />
+            Jeżeli przez przewodnik płynie prąd elektryczny, wokół niego powstaje pole magnetyczne - tę zależność odkrył i opisał André Ampère. To pole może oddziaływać tak samo, jak pole pochodzące od magnesów stałych, czyli może powodować przyciąganie lub odpychanie.<br /><br />
+            Jeżeli przez przewód płynie prąd I, wówczas wokół niego powstaje pole magnetyczne o indukcji B. Jeżeli obejmiemy przewód prawą ręką tak, aby kciuk wskazywał kierunek przepływu prądu, to cztery zgięte palce wskażą zwrot wektora indukcji magnetycznej.
+            W ten sposób można również określić ustawienie się igły magnetycznej przy takim przewodniku. Zakładamy przy tym, że ta igła jest pomalowana w sposób typowy, czyli biegun południowy (S) ma kolor czerwony, a północny (N) niebieski.
           </Box>
-
-
-          <Typography paragraph sx={{ fontFamily: 'monospace', backgroundColor: '#f5f5f5', p: 2, borderRadius: 1 }}>
-            e = B · l · v
-          </Typography>
-
-          <Typography paragraph>
-            <strong>e</strong> – siła elektromotoryczna (V) <br />
-            <strong>B</strong> – indukcja magnetyczna (T) <br />
-            <strong>l</strong> – długość przewodnika w polu magnetycznym (m) <br />
-            <strong>v</strong> – prędkość ruchu przewodnika (m/s)
-          </Typography>
-
-          <Typography paragraph>
-            Indukcja elektromagnetyczna znajduje zastosowanie m.in. w prądnicach, transformatorach, mikrofonach dynamicznych oraz bezkontaktowym ładowaniu urządzeń elektronicznych. To jedno z kluczowych zjawisk umożliwiających przekształcanie energii mechanicznej w elektryczną.
-          </Typography>
         </Box>
-      </motion.div>
+      </motion.div >
 
 
       {/* Dla bardziej zaawansowanych */}
-      <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.4 }}>
+      < motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.4 }}>
         <Box sx={{ p: 3, backgroundColor: 'background.paper', borderRadius: 2, boxShadow: 3, mt: 2 }}>
           <Typography variant="h5" gutterBottom>
             Dla bardziej zaawansowanych
@@ -455,8 +482,8 @@ const BasicsPage: React.FC = () => {
             <strong>v</strong> - prędkość z jaką porusza się przewodnik
           </Typography>
         </Box>
-      </motion.div>
-    </Box>
+      </motion.div >
+    </Box >
   );
 };
 
