@@ -1,8 +1,7 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography } from '@mui/material';
-import { motion } from 'framer-motion';
+import { AppBar, Toolbar, IconButton, Typography, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import IconButton from '@mui/material/IconButton';
+import { motion } from 'framer-motion';
 
 const Header: React.FC<{ onMenuClick?: () => void }> = ({ onMenuClick }) => {
   return (
@@ -15,32 +14,37 @@ const Header: React.FC<{ onMenuClick?: () => void }> = ({ onMenuClick }) => {
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
-        {onMenuClick && (
-          <IconButton
-            color="inherit"
-            edge="start"
-            onClick={onMenuClick}
-            sx={{ mr: 2, display: { md: 'none' } }}
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {onMenuClick && (
+            <IconButton
+              color="inherit"
+              edge="start"
+              onClick={onMenuClick}
+              sx={{ mr: 2, display: { md: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            <MenuIcon />
-          </IconButton>
-        )}
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 700,
-              letterSpacing: '1px',
-              color: 'white',
-            }}
-          >
-            Silniki Elektryczne
-          </Typography>
-        </motion.div>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 700,
+                letterSpacing: '1px',
+                color: 'white',
+              }}
+            >
+              Silniki Elektryczne
+            </Typography>
+          </motion.div>
+        </div>
+        <Button color="inherit" variant="outlined" sx={{ borderColor: 'white', color: 'white' }}>
+          Zaloguj się
+        </Button>
       </Toolbar>
     </AppBar>
   );

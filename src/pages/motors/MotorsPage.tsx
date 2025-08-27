@@ -2,6 +2,8 @@ import React from 'react';
 import { Typography, Box, Grid, Card, CardContent, Button } from '@mui/material';
 import BreadcrumbsComponent from '../../components/BreadcrumbsComponent';
 import { Link } from 'react-router-dom';
+import statorPrzyklad from '../../../public/images/ac/stator_przyklad.png';
+import silnikBLDC from '../../../public/images/dc/silnik_bldc.png';
 
 const MotorsPage: React.FC = () => {
   return (
@@ -54,6 +56,41 @@ const MotorsPage: React.FC = () => {
           </Card>
         </Grid>
       </Grid>
+
+      {/* Przykłady */}
+      <Box sx={{ mt: 5 }}>
+        <Typography variant="h5" gutterBottom>Przykłady</Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <Card elevation={2}>
+              <CardContent>
+                <Typography variant="subtitle1" gutterBottom>Stator AC</Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <img
+                    src={statorPrzyklad}
+                    alt="Stator AC"
+                    style={{ maxWidth: '100%', maxHeight: 220 }}
+                  />
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Card elevation={2}>
+              <CardContent>
+                <Typography variant="subtitle1" gutterBottom>Silnik BLDC (DC)</Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <img
+                    src={silnikBLDC}
+                    alt="Silnik BLDC"
+                    style={{ maxWidth: '100%', maxHeight: 220 }}
+                  />
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Box>
     </Box>
   );
 };

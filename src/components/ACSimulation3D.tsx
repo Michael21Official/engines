@@ -2,6 +2,19 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Html, GizmoHelper, GizmoViewport } from "@react-three/drei";
 import { Suspense, useMemo, useState, useRef, useEffect } from "react";
 import { Typography, Box, ToggleButton, ToggleButtonGroup, Button, Slider, Stack } from "@mui/material";
+import { Line } from "react-chartjs-2";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from "chart.js";
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 import { useMediaQuery } from "@mui/material";
 import "./../styles/DCSimulation3D.css";
 
@@ -83,7 +96,11 @@ export default function ACSimulation3D() {
     const [background, setBackground] = useState("#e0eafc");
     const [coilRotating, setCoilRotating] = useState(false);
     const [powerOn, setPowerOn] = useState(false);
+    // Nowe stany
+    const [voltage, setVoltage] = useState(230);
+    const [loadTorque, setLoadTorque] = useState(10);
     const [rotationSpeed, setRotationSpeed] = useState(1);
+    const [chartData, setChartData] = useState<{ torque: number; speed: number }[]>([]);
 
     // Slider do filtrów
     const filtersRef = useRef<HTMLDivElement>(null);
@@ -131,6 +148,32 @@ export default function ACSimulation3D() {
             return updated;
         });
     };
+
+    // Prosty model fizyczny: prędkość obrotu zależy od napięcia i obciążenia
+    useEffect(() => {
+        if (powerOn && coilRotating) {
+            // Przykładowy model: speed = k * (voltage - a * loadTorque)
+            const k = 0.02;
+            const a = 1.2;
+            let speed = k * (voltage - a * loadTorque);
+            speed = Math.max(0, Math.min(5, speed));
+            setRotationSpeed(speed);
+        } else {
+            setRotationSpeed(0);
+        }
+    }, [voltage, loadTorque, powerOn, coilRotating]);
+
+    // Aktualizacja wykresu w czasie rzeczywistym
+    useEffect(() => {
+        if (powerOn && coilRotating) {
+            setChartData((prev) => [
+                ...prev.slice(-49), // max 50 punktów
+                { torque: loadTorque, speed: rotationSpeed },
+            ]);
+        } else {
+            setChartData([]);
+        }
+    }, [rotationSpeed, loadTorque, powerOn, coilRotating]);
 
     return (
         <div className="scene-vertical-container">
@@ -297,18 +340,71 @@ export default function ACSimulation3D() {
                         {coilRotating ? "Zatrzymaj cewkę" : "Uruchom obrót cewki"}
                     </Button>
                 </Stack>
+
+                {/* Napięcie */}
                 <Box sx={{ width: 300, mt: 2 }}>
+                    <Typography gutterBottom>Napięcie zasilania (V): {voltage}</Typography>
+                    <Slider
+                        value={voltage}
+                        min={0}
+                        max={500}
+                        step={1}
+                        onChange={(_, value) => setVoltage(Number(value))}
+                        disabled={!powerOn}
+                        valueLabelDisplay="auto"
+                    />
+                </Box>
+
+                {/* Obciążenie */}
+                <Box sx={{ width: 300 }}>
+                    <Typography gutterBottom>Obciążenie (Nm): {loadTorque}</Typography>
+                    <Slider
+                        value={loadTorque}
+                        min={0}
+                        max={100}
+                        step={1}
+                        onChange={(_, value) => setLoadTorque(Number(value))}
+                        disabled={!powerOn}
+                        valueLabelDisplay="auto"
+                    />
+                </Box>
+
+                {/* Prędkość */}
+                <Box sx={{ width: 300 }}>
                     <Typography gutterBottom>
                         Prędkość obrotu cewki: {rotationSpeed.toFixed(2)}
                     </Typography>
                     <Slider
                         value={rotationSpeed}
-                        min={0.1}
-                        max={3}
+                        min={0}
+                        max={5}
                         step={0.01}
-                        onChange={(_, value) => setRotationSpeed(Number(value))}
-                        disabled={!powerOn || !coilRotating}
+                        disabled
                         valueLabelDisplay="auto"
+                    />
+                </Box>
+
+                {/* Wykres */}
+                <Box sx={{ width: 500, mt: 4, height: 250 }}>
+                    <Line
+                        data={{
+                            labels: chartData.map((_, i) => i + 1),
+                            datasets: [
+                                {
+                                    label: "Moment obrotowy (Nm)",
+                                    data: chartData.map((d) => d.torque),
+                                    borderColor: "rgb(255, 99, 132)",
+                                    fill: false,
+                                },
+                                {
+                                    label: "Prędkość (obr/s)",
+                                    data: chartData.map((d) => d.speed),
+                                    borderColor: "rgb(54, 162, 235)",
+                                    fill: false,
+                                },
+                            ],
+                        }}
+                        options={{ responsive: true, maintainAspectRatio: false }}
                     />
                 </Box>
             </Box>
